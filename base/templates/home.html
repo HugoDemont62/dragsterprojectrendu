@@ -28,31 +28,43 @@
             <img class="voiture" src="../static/assets/{{ car.name }}.png">
         {% endfor %}
     </div>
+    <div id="popup"
+         style="display: none; position: fixed; width: 200px; height: 100px; background: white; border: 1px solid black; padding: 10px; text-align: center; z-index: 1000;">
+        <p id="winner"></p>
+    </div>
+
+    <button id="startRace">Start Race</button>
 
     <script>
     let raceOver = false;
 
-    setInterval(function() {
-      if (raceOver) return;
+    function startRace() {
+      setInterval(function() {
+        if (raceOver) return;
 
-      let carElement;
-      {% for car in cars %}
-        carElement = document.getElementById('{{ car.name }}');
-        if (carElement) {
-          let bottom = parseInt(carElement.style.bottom, 10);
-          if (isNaN(bottom)) {
-            bottom = 0;
-          }
-          let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
-          bottom += speed;
-          carElement.style.bottom = bottom + 'px';
+        let carElement;
+        {% for car in cars %}
+          carElement = document.getElementById('{{ car.name }}');
+          if (carElement) {
+            let bottom = parseInt(carElement.style.bottom, 10);
+            if (isNaN(bottom)) {
+              bottom = 0;
+            }
+            let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
+            bottom += speed;
+            carElement.style.bottom = bottom + 'px';
 
-          if (bottom + carElement.offsetHeight >= window.innerHeight) {
-            console.log('{{ car.name }} has reached the top!');
-            raceOver = true;
+            if (bottom + carElement.offsetHeight >= window.innerHeight) {
+              console.log('{{ car.name }} has reached the top!');
+              raceOver = true;
+              document.getElementById('winner').innerText = '{{ car.name }} a gagné la course !';
+              document.getElementById('popup').style.display = 'block';
+            }
           }
-        }
-      {% endfor %}
-    }, 1000);
+        {% endfor %}
+      }, 1000);
+    }
+
+    document.getElementById('startRace').onclick = startRace;
     </script>
 {% endblock content %}
