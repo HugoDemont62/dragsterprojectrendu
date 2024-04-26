@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="background-court">
-        <a href="{% url "base:logout" %}">logout</a>
         <a href="/">Vers les courses</a>
 
 
@@ -10,9 +9,11 @@
             <img src="../static/assets/podium-1.png">
             <img src="../static/assets/podium-3.png">
         </div>
+        <div class="nom-gagnant">
+            <span id="joueur2">{ non participant }</span>
+            <span id="joueur1">{ non participant }</span>
+            <span id="joueur3">{ non participant }</span>
+        </div>
     </div>
-
-    CLASSEMENT
-
 {% endblock content %}
 </html>

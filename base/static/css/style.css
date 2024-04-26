@@ -9,7 +9,7 @@ body{
  justify-content: center;
  align-items: center;
  height: 100vh;
-
+ overflow: hidden;
 }
 
 .background{
@@ -21,11 +21,11 @@ body{
 }
 
 .background-court{
- height: 100vh;
+  height: 100vh;
   background-image: url("../assets/fond-without-route.png");
   background-size: contain;
- background-repeat: no-repeat;
- overflow: hidden;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .groupVoitureQuiRoule{
@@ -137,4 +137,62 @@ text-decoration: none;
 
 .podium img{
  margin-left: 50px;
+}
+
+.nom-gagnant #joueur2{
+ position: absolute;
+ top: 570px;
+ left: 585px;
+}
+
+.nom-gagnant #joueur1{
+ position: absolute;
+ top: 470px;
+ left: 840px;
+}
+
+.nom-gagnant #joueur3{
+ position: absolute;
+ top: 670px;
+ right: 490px;
+}
+
+.pari{
+ width: 550px;
+ display: flex;
+ flex-direction: column;
+ position: absolute;
+ right: 50px;
+ margin-top: 100px;
+}
+
+.pari #voiture-select{
+ margin-top: 40px;
+}
+
+.pari #voiture-select img{
+ margin-right: 35px;
+}
+
+
+#startRace{
+ padding: 10px;
+ background-color: Black;
+ color: white;
+ margin-top: 100px;
+}
+
+.nav-bar{
+ display: flex;
+ position: absolute;
+ right: 130px;
+ bottom: 20px;
+}
+
+.nav-bar a{
+ padding: 30px;
+ display: flex;
+ text-decoration: none;
+ flex-direction: column;
+ align-items: center;
 }
