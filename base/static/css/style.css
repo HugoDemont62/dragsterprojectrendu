@@ -6,12 +6,56 @@
  transition: 0.3s all ease-in-out;
 }
 body{
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background-color: #fff;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ background-image: url("../assets/fond.png");
+  background-size: contain;
+ background-repeat: no-repeat;
+ overflow: hidden;
 }
+
+.groupVoitureQuiRoule{
+ display: flex;
+ flex-wrap: wrap;
+ gap: 50px;
+}
+
+.voiture-qui-roule{
+ height: 200px;
+ position: absolute;
+}
+
+#voiture-bleu{
+ bottom: -80px;
+ left: 340px;
+}
+
+#voiture-rouge{
+ bottom: -80px;
+ left: 510px;
+}
+
+#voiture-orange{
+ bottom: -80px;
+ left: 670px;
+}
+
+#voiture-violette{
+ bottom: -80px;
+ left: 840px;
+}
+
+.groupVoiture{
+ display: flex;
+ flex-wrap: wrap;
+ gap: 50px;
+}
+
+.voiture{
+ height: 200px;
+}
+
 .shadow-wrap{
  border-radius: 5px;
  padding: 25px;
