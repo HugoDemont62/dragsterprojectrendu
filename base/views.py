@@ -8,7 +8,7 @@ import random
 
 @login_required
 def home(request):
-    Car.objects.update_or_create(name='voiture-bleu', defaults={'max_speed': 1000})
+    Car.objects.update_or_create(name='voiture-bleu', defaults={'max_speed': random.randint(100, 130)})
     Car.objects.update_or_create(name='voiture-rouge', defaults={'max_speed': random.randint(100, 130)})
     Car.objects.update_or_create(name='voiture-violette', defaults={'max_speed': random.randint(100, 130)})
     Car.objects.update_or_create(name='voiture-orange', defaults={'max_speed': random.randint(100, 130)})
