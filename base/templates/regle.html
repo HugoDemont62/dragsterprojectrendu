@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="background-court">
+        <a href="{% url "base:logout" %}">logout</a>
+        <a href="/">Vers les courses</a>
+    
+    
+    
+        <ul>
+            <li>1. Tous les paris doivent être placés avant le début officiel de la course. Aucun pari ne sera accepté une fois que la course a commencé.</li>
+            <li>2. Les paris sur la vitesse des voitures doivent spécifier à une vitesse et ne seront valables que si la vitesse est atteinte pendant la course.</li>
+            <li>3. Les paris sur la voiture gagnante doivent être clairement indiqués en sélectionnant la voiture. Tout pari ambigu ou mal spécifié sera considéré comme nul.</li>
+            <li>4. En cas de litige ou de contestation sur le résultat d'un pari, la décision finale reviendra à l'opérateur du site web de paris.</li>
+            <li>5. Les paris sont strictement limités aux adultes âgés de 18 ans et plus. Toute utilisation du site web de paris par des mineurs est strictement interdite.</li>
+            <li>6. Les utilisateurs doivent respecter les lois et réglementations de leur juridiction concernant les jeux de hasard en ligne. L'opérateur du site web de paris n'est pas responsable des infractions éventuelles commises par les utilisateurs.</li>
+            <li>7. Les utilisateurs sont responsables de la confidentialité de leurs informations de connexion et ne doivent pas partager leur compte avec d'autres personnes. L'opérateur du site web de paris ne sera pas tenu responsable des pertes découlant de l'utilisation non autorisée des comptes.</li>
+        </ul>
+    </div>
+{% endblock content %}
+</html>
