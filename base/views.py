@@ -26,3 +26,10 @@ def authView(request):
     else:
         form = UserCreationForm()
     return render(request, "registration/signup.html", {"form": form})
+
+
+def regleView(request):
+    return render(request, "regle.html")
+
+def classementView(request):
+    return render(request, "classement.html")
