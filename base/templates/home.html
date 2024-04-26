@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-home page
-<a href="{% url "base:logout" %}">logout</a>
+    <a href="{% url "base:logout" %}">logout</a>
+    
+    <a>Classements</a>
+    <a>Règles</a>
+    
+    
+    
+    
+    
+    <p>Quelle sera la vitesse maximum atteinte par les coureurs ?</p>
+    
+    <p>Qui va gagner la course ?</p>
+    <div class="groupVoiture">
+        <img class="voiture" src="../static/assets/voiture-bleu.png">
+        <img class="voiture" src="../static/assets/voiture-rouge.png">
+        <img class="voiture" src="../static/assets/voiture-violette.png">
+        <img class="voiture" src="../static/assets/voiture-orange.png">
+    </div>
+    
+    <p>Va-t-il y avoir un crash pendant la course ?</p>
+    <p>Oui !</p>
+    <p>Non !</p>
+    
+    <p>Quelle voiture va se crasher ?</p>
+    <div class="groupVoiture">
+        <img class="voiture" src="../static/assets/voiture-bleu.png">
+        <img class="voiture" src="../static/assets/voiture-rouge.png">
+        <img class="voiture" src="../static/assets/voiture-violette.png">
+        <img class="voiture" src="../static/assets/voiture-orange.png">
+    </div>
 {% endblock content %}

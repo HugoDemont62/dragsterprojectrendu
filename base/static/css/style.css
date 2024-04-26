@@ -6,12 +6,24 @@
  transition: 0.3s all ease-in-out;
 }
 body{
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background-color: #fff;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ background-image: url("../assets/fond.png");
+  background-size: contain;
+ background-repeat: no-repeat;
 }
+
+.groupVoiture{
+ display: flex;
+ flex-wrap: wrap;
+ gap: 50px;
+}
+
+.voiture{
+ height: 200px;
+}
+
 .shadow-wrap{
  border-radius: 5px;
  padding: 25px;
