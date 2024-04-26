@@ -3,16 +3,15 @@
     <div class="background-court">
         <a href="/">Vers les courses</a>
 
-
         <div class="podium">
             <img src="../static/assets/podium-2.png">
             <img src="../static/assets/podium-1.png">
             <img src="../static/assets/podium-3.png">
         </div>
         <div class="nom-gagnant">
-            <span id="joueur2">{ non participant }</span>
-            <span id="joueur1">{ non participant }</span>
-            <span id="joueur3">{ non participant }</span>
+            {% for user in top_users %}
+                <span id="joueur{{ forloop.counter }}">{{ user.user.username }}: {{ user.points }} points</span>
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}

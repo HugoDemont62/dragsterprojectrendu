@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="background">
-    
+
         <div class="groupVoitureQuiRoule">
             {% for car in cars %}
                 <img class="voiture-qui-roule" id="{{ car.name }}" src="../static/assets/{{ car.name }}.png">
@@ -16,51 +16,77 @@
                 {% endfor %}
             </div>
 
-            
+            <form method="post" action="{% url 'base:place_bet' %}">
+                {% csrf_token %}
+                <select name="car">
+                    {% for car in cars %}
+                        <option value="{{ car.id }}">{{ car.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="points" min="1" max="{{ user_points }}" required>
+                <input type="submit" value="Place Bet">
+                <p>Points: {{ user_points }}</p>
+            </form>
+
+
             <div id="popup"
                  style="display: none; position: fixed; width: 200px; height: 100px; background: white; border: 1px solid black; padding: 10px; text-align: center; z-index: 1000;">
                 <p id="winner"></p>
+                <!-- go to /  -->
+                <a href="{% url 'base:home' %}">Relancer</a>
             </div>
 
             <button id="startRace">Start Race</button>
         </div>
-    
+
         <div class="nav-bar">
             <a href="classement"><img src="../static/assets/trophy.png">Classement</a>
             <a href="regle"><img src="../static/assets/regle.png">Règles</a>
         </div>
 
         <script>
-            let raceOver = false;
+        let raceOver = false;
 
-            function startRace() {
-                setInterval(function() {
-                    if (raceOver) return;
+        function startRace() {
+          setInterval(function() {
+            if (raceOver) return;
 
-                    let carElement;
-                    {% for car in cars %}
-                        carElement = document.getElementById('{{ car.name }}');
-                        if (carElement) {
-                            let bottom = parseInt(carElement.style.bottom, 10);
-                            if (isNaN(bottom)) {
-                                bottom = 0;
-                            }
-                            let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
-                            bottom += speed;
-                            carElement.style.bottom = bottom + 'px';
+            let carElement;
+            {% for car in cars %}
+              carElement = document.getElementById('{{ car.name }}');
+              if (carElement) {
+                let bottom = parseInt(carElement.style.bottom, 10);
+                if (isNaN(bottom)) {
+                  bottom = 0;
+                }
+                let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
+                bottom += speed;
+                carElement.style.bottom = bottom + 'px';
 
-                            if (bottom + carElement.offsetHeight >= window.innerHeight) {
-                                console.log('{{ car.name }} has reached the top!');
-                                raceOver = true;
-                                document.getElementById('winner').innerText = '{{ car.name }} a gagné la course !';
-                                document.getElementById('popup').style.display = 'block';
-                            }
-                        }
-                    {% endfor %}
-                }, 1000);
-            }
+                if (bottom + carElement.offsetHeight >= window.innerHeight) {
+                  console.log('{{ car.name }} has reached the top!');
+                  raceOver = true;
+                  document.getElementById('winner').innerText = '{{ car.name }} a gagné la course !';
+                  document.getElementById('popup').style.display = 'block';
 
-            document.getElementById('startRace').onclick = startRace;
+                  // Make an AJAX request to check the bet
+                  var xhr = new XMLHttpRequest();
+                  xhr.open("POST", "{% url 'base:check_bet' %}", true);
+                  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                  xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                  xhr.onreadystatechange = function() {
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                      console.log(JSON.parse(this.responseText).message);
+                    }
+                  }
+                  xhr.send("winning_car_id=" + '{{ car.id }}');
+                }
+              }
+            {% endfor %}
+          }, 1000);
+        }
+
+        document.getElementById('startRace').onclick = startRace;
         </script>
     </div>
 {% endblock content %}
