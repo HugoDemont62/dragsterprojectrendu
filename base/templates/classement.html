@@ -10,7 +10,7 @@
         </div>
         <div class="nom-gagnant">
             {% for user in top_users %}
-                <span id="joueur{{ forloop.counter }}">{{ user.user.username }}: {{ user.points }} points</span>
+                <span id="joueur{{ forloop.counter }}">{{ user.user.username }}:<br> {{ user.points }} points</span>
             {% endfor %}
         </div>
     </div>
