@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <a href="{% url "base:logout" %}">logout</a>
+    <button id="startRace">Start Race</button>
+    <button id="resetRace">Reset Race</button>
 
     <a>Classements</a>
     <a>Règles</a>
@@ -33,15 +35,14 @@
         <p id="winner"></p>
     </div>
 
-    <button id="startRace">Start Race</button>
-
     <script>
     let raceOver = false;
 
     function startRace() {
       setInterval(function() {
-        if (raceOver) return;
-
+        if (raceOver) {
+          return;
+        }
         let carElement;
         {% for car in cars %}
           carElement = document.getElementById('{{ car.name }}');
@@ -63,8 +64,28 @@
           }
         {% endfor %}
       }, 1000);
+
     }
 
-    document.getElementById('startRace').onclick = startRace;
+    function resetRace() {
+      raceOver = false;
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('winner').innerText = '';
+      {% for car in cars %}
+        document.getElementById('{{ car.name }}').style.bottom = '0px';
+      {% endfor %}
+    }
+
+    if (raceOver) {
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('resetRace').style.display = 'block';
+      document.getElementById('resetRace').addEventListener('click', resetRace);
+      document.getElementById('startRace').removeEventListener('click', startRace);
+    } else {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('resetRace').style.display = 'none';
+        document.getElementById('startRace').addEventListener('click', startRace);
+        document.getElementById('resetRace').removeEventListener('click', resetRace);
+    }
     </script>
 {% endblock content %}
