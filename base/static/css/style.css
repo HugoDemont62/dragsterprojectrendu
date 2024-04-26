@@ -9,7 +9,20 @@ body{
  justify-content: center;
  align-items: center;
  height: 100vh;
- background-image: url("../assets/fond.png");
+
+}
+
+.background{
+ height: 100vh;
+  background-image: url("../assets/fond.png");
+  background-size: contain;
+ background-repeat: no-repeat;
+ overflow: hidden;
+}
+
+.background-court{
+ height: 100vh;
+  background-image: url("../assets/fond-without-route.png");
   background-size: contain;
  background-repeat: no-repeat;
  overflow: hidden;
@@ -114,5 +127,14 @@ text-decoration: none;
  background-color: #fff;
  color: #10182F;
  border-color: #10182F;
+}
 
+.podium{
+ position: absolute;
+ bottom: -10px;
+ left: 500px;
+}
+
+.podium img{
+ margin-left: 50px;
 }

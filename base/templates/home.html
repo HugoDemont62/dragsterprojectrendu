@@ -1,74 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
-    <a href="{% url "base:logout" %}">logout</a>
+    <div class="background">
+        <a href="{% url "base:logout" %}">logout</a>
 
-    <a href="classement">Classements</a>
-    <a href="regle">Règles</a>
-    
-    <div class="groupVoitureQuiRoule">
-        {% for car in cars %}
-            <img class="voiture-qui-roule" id="{{ car.name }}" src="../static/assets/{{ car.name }}.png">
-        {% endfor %}
-    </div>
-    
-    <div class="pari">
-        <p>Quelle sera la vitesse maximum atteinte par les coureurs ?</p>
+        <a href="classement">Classements</a>
+        <a href="regle">Règles</a>
 
-        <p>Qui va gagner la course ?</p>
-        <div class="groupVoiture">
+        <div class="groupVoitureQuiRoule">
             {% for car in cars %}
-                <img class="voiture" src="../static/assets/{{ car.name }}.png">
+                <img class="voiture-qui-roule" id="{{ car.name }}" src="../static/assets/{{ car.name }}.png">
             {% endfor %}
         </div>
 
-        <p>Va-t-il y avoir un crash pendant la course ?</p>
-        <p>Oui !</p>
-        <p>Non !</p>
+        <div class="pari">
+            <p>Quelle sera la vitesse maximum atteinte par les coureurs ?</p>
 
-        <p>Quelle voiture va se crasher ?</p>
-        <div class="groupVoiture">
-            {% for car in cars %}
-                <img class="voiture" src="../static/assets/{{ car.name }}.png">
-            {% endfor %}
-        </div>
-        <div id="popup"
-             style="display: none; position: fixed; width: 200px; height: 100px; background: white; border: 1px solid black; padding: 10px; text-align: center; z-index: 1000;">
-            <p id="winner"></p>
+            <p>Qui va gagner la course ?</p>
+            <div class="groupVoiture">
+                {% for car in cars %}
+                    <img class="voiture" src="../static/assets/{{ car.name }}.png">
+                {% endfor %}
+            </div>
+
+            <p>Va-t-il y avoir un crash pendant la course ?</p>
+            <p>Oui !</p>
+            <p>Non !</p>
+
+            <p>Quelle voiture va se crasher ?</p>
+            <div class="groupVoiture">
+                {% for car in cars %}
+                    <img class="voiture" src="../static/assets/{{ car.name }}.png">
+                {% endfor %}
+            </div>
+            <div id="popup"
+                 style="display: none; position: fixed; width: 200px; height: 100px; background: white; border: 1px solid black; padding: 10px; text-align: center; z-index: 1000;">
+                <p id="winner"></p>
+            </div>
+
+            <button id="startRace">Start Race</button>
         </div>
 
-        <button id="startRace">Start Race</button>
+        <script>
+            let raceOver = false;
+
+            function startRace() {
+                setInterval(function() {
+                    if (raceOver) return;
+
+                    let carElement;
+                    {% for car in cars %}
+                        carElement = document.getElementById('{{ car.name }}');
+                        if (carElement) {
+                            let bottom = parseInt(carElement.style.bottom, 10);
+                            if (isNaN(bottom)) {
+                                bottom = 0;
+                            }
+                            let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
+                            bottom += speed;
+                            carElement.style.bottom = bottom + 'px';
+
+                            if (bottom + carElement.offsetHeight >= window.innerHeight) {
+                                console.log('{{ car.name }} has reached the top!');
+                                raceOver = true;
+                                document.getElementById('winner').innerText = '{{ car.name }} a gagné la course !';
+                                document.getElementById('popup').style.display = 'block';
+                            }
+                        }
+                    {% endfor %}
+                }, 1000);
+            }
+
+            document.getElementById('startRace').onclick = startRace;
+        </script>
     </div>
-
-    <script>
-    let raceOver = false;
-
-    function startRace() {
-      setInterval(function() {
-        if (raceOver) return;
-
-        let carElement;
-        {% for car in cars %}
-          carElement = document.getElementById('{{ car.name }}');
-          if (carElement) {
-            let bottom = parseInt(carElement.style.bottom, 10);
-            if (isNaN(bottom)) {
-              bottom = 0;
-            }
-            let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
-            bottom += speed;
-            carElement.style.bottom = bottom + 'px';
-
-            if (bottom + carElement.offsetHeight >= window.innerHeight) {
-              console.log('{{ car.name }} has reached the top!');
-              raceOver = true;
-              document.getElementById('winner').innerText = '{{ car.name }} a gagné la course !';
-              document.getElementById('popup').style.display = 'block';
-            }
-          }
-        {% endfor %}
-      }, 1000);
-    }
-
-    document.getElementById('startRace').onclick = startRace;
-    </script>
 {% endblock content %}
