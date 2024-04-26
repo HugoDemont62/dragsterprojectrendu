@@ -1,5 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-home page
-<a href="{% url "base:logout" %}">logout</a>
+    home page
+    <a href="{% url "base:logout" %}">logout</a>
+
+    <h1>Car Race</h1>
+    {% for car in cars %}
+        <div id="car{{ car.id }}" class="car" style="top: {{ car.speed }}px;">
+            {{ car.name }} ({{ car.speed }})
+        </div>
+    {% endfor %}
+
+    <script>
+    // Animate cars
+    setInterval(function() {
+      {% for car in cars %}
+        let carElement = document.getElementById('car{{ car.id }}');
+        if (carElement) {
+          let bottom = parseInt(carElement.style.bottom, 10);
+          if (isNaN(bottom)) {
+            bottom = 0;
+          }
+          bottom += {{ car.speed }};
+          carElement.style.bottom = bottom + 'px';
+
+          // Check if the car has reached the top of the screen
+          if (bottom + carElement.offsetHeight >= window.innerHeight) {
+            alert('{{ car.name }} has reached the top!');
+          }
+        }
+      {% endfor %}
+    }, 1000);
+    </script>
 {% endblock content %}
