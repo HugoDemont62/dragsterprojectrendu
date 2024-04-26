@@ -31,5 +31,6 @@ def authView(request):
 def regleView(request):
     return render(request, "regle.html")
 
+
 def classementView(request):
     return render(request, "classement.html")
