@@ -1,31 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
-    home page
     <a href="{% url "base:logout" %}">logout</a>
 
-    <h1>Car Race</h1>
-    {% for car in cars %}
-        <div id="car{{ car.id }}" class="car" style="top: {{ car.speed }}px;">
-            {{ car.name }} ({{ car.speed }})
-        </div>
-    {% endfor %}
+    <a>Classements</a>
+    <a>Règles</a>
+    <div class="groupVoitureQuiRoule">
+        {% for car in cars %}
+            <img class="voiture-qui-roule" id="{{ car.name }}" src="../static/assets/{{ car.name }}.png">
+        {% endfor %}
+    </div>
+    <p>Quelle sera la vitesse maximum atteinte par les coureurs ?</p>
+
+    <p>Qui va gagner la course ?</p>
+    <div class="groupVoiture">
+        {% for car in cars %}
+            <img class="voiture" src="../static/assets/{{ car.name }}.png">
+        {% endfor %}
+    </div>
+
+    <p>Va-t-il y avoir un crash pendant la course ?</p>
+    <p>Oui !</p>
+    <p>Non !</p>
+
+    <p>Quelle voiture va se crasher ?</p>
+    <div class="groupVoiture">
+        {% for car in cars %}
+            <img class="voiture" src="../static/assets/{{ car.name }}.png">
+        {% endfor %}
+    </div>
 
     <script>
-    // Animate cars
+    let raceOver = false;
+
     setInterval(function() {
+      if (raceOver) return;
+
+      let carElement;
       {% for car in cars %}
-        let carElement = document.getElementById('car{{ car.id }}');
+        carElement = document.getElementById('{{ car.name }}');
         if (carElement) {
           let bottom = parseInt(carElement.style.bottom, 10);
           if (isNaN(bottom)) {
             bottom = 0;
           }
-          bottom += {{ car.speed }};
+          let speed = Math.floor(Math.random() * {{ car.max_speed }}) + 1;
+          bottom += speed;
           carElement.style.bottom = bottom + 'px';
 
-          // Check if the car has reached the top of the screen
           if (bottom + carElement.offsetHeight >= window.innerHeight) {
-            alert('{{ car.name }} has reached the top!');
+            console.log('{{ car.name }} has reached the top!');
+            raceOver = true;
           }
         }
       {% endfor %}
